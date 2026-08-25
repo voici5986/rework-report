@@ -2,7 +2,7 @@ import {
   createSessionCookie,
   createSessionToken,
   verifyPassword,
-} from '../server/auth';
+} from '../server/auth.js';
 
 function json(body: unknown, status: number) {
   return Response.json(body, {

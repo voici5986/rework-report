@@ -1,4 +1,4 @@
-import { clearSessionCookie } from '../server/auth';
+import { clearSessionCookie } from '../server/auth.js';
 
 export default {
   async fetch(request: Request) {

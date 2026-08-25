@@ -3,7 +3,7 @@ import {
   getCookieValue,
   SESSION_COOKIE_NAME,
   verifySessionToken,
-} from './server/auth';
+} from './server/auth.js';
 
 export default async function middleware(request: Request) {
   const sessionSecret = process.env.REWORK_SESSION_SECRET;
