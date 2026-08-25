@@ -17,7 +17,9 @@ export function formatDateInput(value: string): string {
 }
 
 export function normalizeDateInput(value: string, fallback: string): string {
-  const raw = String(value || '').trim().replace(/[.\-]/g, '/');
+  const raw = String(value || '')
+    .trim()
+    .replace(/[.\-]/g, '/');
   const parts = raw.split('/').filter(Boolean).map(Number);
   let year: number;
   let month: number;
@@ -26,14 +28,19 @@ export function normalizeDateInput(value: string, fallback: string): string {
   if (parts.length === 3) {
     [year, month, day] = parts;
   } else if (parts.length === 2) {
-    year = Number(String(fallback || '').slice(0, 4)) || new Date().getFullYear();
+    year =
+      Number(String(fallback || '').slice(0, 4)) || new Date().getFullYear();
     [month, day] = parts;
   } else {
     return fallback;
   }
 
   const date = new Date(year, month - 1, day);
-  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+  if (
+    date.getFullYear() !== year ||
+    date.getMonth() !== month - 1 ||
+    date.getDate() !== day
+  ) {
     return fallback;
   }
 

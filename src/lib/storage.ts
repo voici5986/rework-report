@@ -9,7 +9,9 @@ function cloneDefault(): ReportState {
 
 export function loadReport(): ReportState {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? 'null') as Partial<ReportState> | null;
+    const saved = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) ?? 'null',
+    ) as Partial<ReportState> | null;
     if (saved && Array.isArray(saved.rows)) {
       return {
         ...cloneDefault(),
@@ -19,7 +21,7 @@ export function loadReport(): ReportState {
           ...saved.rates,
         },
         rows: saved.rows.map((row, index) => ({
-          ...DEFAULT_REPORT.rows[index] ?? DEFAULT_REPORT.rows[0],
+          ...(DEFAULT_REPORT.rows[index] ?? DEFAULT_REPORT.rows[0]),
           ...row,
           id: row.id ?? `${row.date ?? 'row'}-${index}`,
         })),

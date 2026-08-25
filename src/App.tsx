@@ -8,18 +8,28 @@ import { WageRates } from './components/WageRates';
 import { calculateTotals } from './lib/calculations';
 import { periodText } from './lib/format';
 import { loadReport, resetReport, saveReport } from './lib/storage';
-import type { ReportState, ReworkRow, WageRates as WageRatesType } from './types/report';
+import type {
+  ReportState,
+  ReworkRow,
+  WageRates as WageRatesType,
+} from './types/report';
 
 export default function App() {
   const [report, setReport] = useState<ReportState>(() => loadReport());
   const totals = useMemo(() => calculateTotals(report), [report]);
-  const period = useMemo(() => periodText(report.rows.map((row) => row.date)), [report.rows]);
+  const period = useMemo(
+    () => periodText(report.rows.map((row) => row.date)),
+    [report.rows],
+  );
 
   useEffect(() => {
     saveReport(report);
   }, [report]);
 
-  function updateMeta(key: 'projectName' | 'reportTitle' | 'subtitle', value: string) {
+  function updateMeta(
+    key: 'projectName' | 'reportTitle' | 'subtitle',
+    value: string,
+  ) {
     setReport((current) => ({ ...current, [key]: value }));
   }
 
@@ -33,7 +43,9 @@ export default function App() {
   function updateRow(id: string, patch: Partial<ReworkRow>) {
     setReport((current) => ({
       ...current,
-      rows: current.rows.map((row) => (row.id === id ? { ...row, ...patch } : row)),
+      rows: current.rows.map((row) =>
+        row.id === id ? { ...row, ...patch } : row,
+      ),
     }));
   }
 
@@ -61,7 +73,12 @@ export default function App() {
         />
         <SummaryCards totals={totals} />
         <WageRates rates={report.rates} onChange={updateRate} />
-        <ReworkTable rows={report.rows} rates={report.rates} totals={totals} onRowChange={updateRow} />
+        <ReworkTable
+          rows={report.rows}
+          rates={report.rates}
+          totals={totals}
+          onRowChange={updateRow}
+        />
         <CostBreakdown totals={totals} />
       </main>
     </>

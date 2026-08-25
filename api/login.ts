@@ -36,7 +36,11 @@ export default {
       return json({ error: '请求格式无效。' }, 400);
     }
 
-    if (!password || password.length > 256 || !(await verifyPassword(password, expectedPassword))) {
+    if (
+      !password ||
+      password.length > 256 ||
+      !(await verifyPassword(password, expectedPassword))
+    ) {
       await new Promise((resolve) => setTimeout(resolve, 350));
       return json({ error: '密码不正确。' }, 401);
     }

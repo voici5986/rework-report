@@ -9,7 +9,11 @@ export default async function middleware(request: Request) {
   const sessionSecret = process.env.REWORK_SESSION_SECRET;
   const sessionToken = getCookieValue(request, SESSION_COOKIE_NAME);
 
-  if (sessionSecret && sessionToken && (await verifySessionToken(sessionToken, sessionSecret))) {
+  if (
+    sessionSecret &&
+    sessionToken &&
+    (await verifySessionToken(sessionToken, sessionSecret))
+  ) {
     return next();
   }
 

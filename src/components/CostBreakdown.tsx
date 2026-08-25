@@ -13,7 +13,9 @@ export function CostBreakdown({ totals }: CostBreakdownProps) {
   return (
     <section className="breakdown">
       <div className="breakdown-head">
-        <div className="breakdown-title">总成本构成 · {money(totals.total)}</div>
+        <div className="breakdown-title">
+          总成本构成 · {money(totals.total)}
+        </div>
         <div className="breakdown-note">按工资类型占比</div>
       </div>
       <div className="stack">
@@ -22,9 +24,24 @@ export function CostBreakdown({ totals }: CostBreakdownProps) {
         <div className="seg sup" style={{ width: `${supervisorPct}%` }} />
       </div>
       <div className="legend">
-        <div className="legend-item"><span className="dot normal" /><span>正常工资</span><strong>{money(totals.normalCost)}</strong><span>· {normalPct.toFixed(1)}%</span></div>
-        <div className="legend-item"><span className="dot ot" /><span>加班工资</span><strong>{money(totals.otCost)}</strong><span>· {otPct.toFixed(1)}%</span></div>
-        <div className="legend-item"><span className="dot sup" /><span>监工工资</span><strong>{money(totals.supervisorCost)}</strong><span>· {supervisorPct.toFixed(1)}%</span></div>
+        <div className="legend-item">
+          <span className="dot normal" />
+          <span>正常工资</span>
+          <strong>{money(totals.normalCost)}</strong>
+          <span>· {normalPct.toFixed(1)}%</span>
+        </div>
+        <div className="legend-item">
+          <span className="dot ot" />
+          <span>加班工资</span>
+          <strong>{money(totals.otCost)}</strong>
+          <span>· {otPct.toFixed(1)}%</span>
+        </div>
+        <div className="legend-item">
+          <span className="dot sup" />
+          <span>监工工资</span>
+          <strong>{money(totals.supervisorCost)}</strong>
+          <span>· {supervisorPct.toFixed(1)}%</span>
+        </div>
       </div>
     </section>
   );
