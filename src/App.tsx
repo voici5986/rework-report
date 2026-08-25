@@ -44,7 +44,11 @@ export default function App() {
 
   return (
     <>
-      <Toolbar onReset={handleReset} onPrint={() => window.print()} />
+      <Toolbar
+        onReset={handleReset}
+        onPrint={() => window.print()}
+        onLogout={() => window.location.assign('/api/logout')}
+      />
       <main className="page" id="report">
         <ReportHeader
           projectName={report.projectName}
