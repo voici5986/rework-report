@@ -108,7 +108,10 @@ function RowCountControl({ count, onChange }: RowCountControlProps) {
   }
 
   return (
-    <div className="day-count-control print-hidden" aria-label="返工天数设置">
+    <fieldset
+      className="day-count-control print-hidden"
+      aria-label="返工天数设置"
+    >
       <span className="day-count-label">返工天数</span>
       <div className="day-count-stepper">
         <button
@@ -150,7 +153,7 @@ function RowCountControl({ count, onChange }: RowCountControlProps) {
         </button>
       </div>
       <span className="day-count-unit">天</span>
-    </div>
+    </fieldset>
   );
 }
 

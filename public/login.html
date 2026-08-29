@@ -97,7 +97,7 @@
     <div class="config" id="configNotice">访问保护尚未完成环境变量配置。配置完成并重新部署后即可登录。</div>
     <form id="loginForm">
       <label for="password">访问密码</label>
-      <input id="password" name="password" type="password" autocomplete="current-password" autofocus required maxlength="256" />
+      <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="256" />
       <button id="submitButton" type="submit">登录</button>
       <div class="error" id="errorMessage" role="status" aria-live="polite"></div>
     </form>
@@ -105,7 +105,7 @@
   <script>
     const params = new URLSearchParams(window.location.search);
     const rawNext = params.get('next');
-    const nextUrl = rawNext && rawNext.startsWith('/') && !rawNext.startsWith('//') ? rawNext : '/';
+    const nextUrl = rawNext?.startsWith('/') && !rawNext.startsWith('//') ? rawNext : '/';
     if (params.get('config') === '1') document.getElementById('configNotice').style.display = 'block';
 
     const form = document.getElementById('loginForm');

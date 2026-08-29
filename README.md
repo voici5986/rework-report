@@ -91,6 +91,25 @@ pnpm test
 pnpm run test:watch
 ```
 
+提交前代码检查：
+
+```bash
+pnpm run check
+```
+
+推送前完整验证（格式、lint、测试和生产构建）：
+
+```bash
+pnpm run verify
+```
+
+执行 `pnpm install` 时会自动安装 Husky hooks：
+
+- `pre-commit`：只检查已暂存文件
+- `pre-push`：执行完整 `pnpm run verify`
+
+GitHub Actions 会在 Pull Request 以及推送 `main` 时用冻结锁文件重新安装依赖并执行同等验证。
+
 ## 部署到 Vercel
 
 仓库连接 Vercel 后，推送 `main` 即可自动部署。Framework Preset 使用 `Vite`，构建命令 `pnpm run build`，输出目录 `dist`。

@@ -315,6 +315,9 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
   color: #696e79;
   font-size: 12px;
   white-space: nowrap;
@@ -386,6 +389,11 @@ table {
   border-collapse: collapse;
   table-layout: fixed;
 }
+th,
+td {
+  text-align: center;
+  padding: 0 10px;
+}
 thead tr.group th {
   font-size: 10.5px;
   color: #afb2ba;
@@ -401,11 +409,6 @@ thead tr.cols th {
   background: #fafafa;
   height: 43px;
   border-bottom: 1px solid var(--line-strong);
-}
-th,
-td {
-  text-align: center;
-  padding: 0 10px;
 }
 th:first-child,
 td:first-child {

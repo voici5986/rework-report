@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.2.0",
   "type": "module",
+  "packageManager": "pnpm@11.24.0",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && tsc -p tsconfig.vercel.json && vite build",
@@ -10,7 +11,14 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "biome format --write .",
-    "format:check": "biome format ."
+    "format:check": "biome format .",
+    "lint": "biome lint --error-on-warnings .",
+    "check": "biome check --error-on-warnings .",
+    "check:staged": "biome check --error-on-warnings --no-errors-on-unmatched --staged",
+    "ci:check": "biome ci --error-on-warnings .",
+    "verify": "pnpm run check && pnpm test && pnpm run build",
+    "verify:ci": "pnpm run ci:check && pnpm test && pnpm run build",
+    "prepare": "node .husky/install.mjs"
   },
   "dependencies": {
     "@vercel/functions": "^3.9.5",
@@ -24,6 +32,7 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "@vitejs/plugin-react": "^6.1.0",
+    "husky": "^9.1.7",
     "jsdom": "^30.0.1",
     "typescript": "^7.0.2",
     "vite": "^8.2.2",

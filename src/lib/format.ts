@@ -24,7 +24,7 @@ export function formatDateInput(value: string): string {
 export function normalizeDateInput(value: string, fallback: string): string {
   const raw = String(value || '')
     .trim()
-    .replace(/[.\-]/g, '/');
+    .replace(/[.-]/g, '/');
   const parts = raw.split('/').filter(Boolean).map(Number);
   let year: number;
   let month: number;
@@ -64,7 +64,7 @@ export function periodText(dates: string[]): string {
   if (validDates.length === 0) return '—';
   const sorted = [...validDates].sort();
   const firstDate = sorted[0];
-  const lastDate = sorted.at(-1)!;
+  const lastDate = sorted.at(-1) ?? firstDate;
   const [firstYear] = firstDate.split('-');
   const [lastYear, lastMonth, lastDay] = lastDate.split('-');
   const last =
