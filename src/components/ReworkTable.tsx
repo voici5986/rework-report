@@ -3,9 +3,15 @@ import { calculateRow } from '../lib/calculations';
 import {
   formatDateInput,
   normalizeDateInput,
+  normalizeNonNegativeNumber,
   numberText,
   weekday,
 } from '../lib/format';
+import {
+  MAX_REPORT_ROW_COUNT,
+  MIN_REPORT_ROW_COUNT,
+  normalizeReportRowCount,
+} from '../lib/reportRows';
 import type { ReportTotals, ReworkRow, WageRates } from '../types/report';
 
 interface ReworkTableProps {
@@ -13,6 +19,7 @@ interface ReworkTableProps {
   rates: WageRates;
   totals: ReportTotals;
   onRowChange: (id: string, patch: Partial<ReworkRow>) => void;
+  onRowCountChange: (count: number) => boolean;
 }
 
 interface DateFieldProps {
@@ -67,10 +74,83 @@ function NumberField({ value, step = 1, label, onChange }: NumberFieldProps) {
       type="number"
       min="0"
       step={step}
-      value={value}
+      value={value || ''}
       aria-label={label}
-      onChange={(event) => onChange(Number(event.target.value || 0))}
+      onChange={(event) =>
+        onChange(normalizeNonNegativeNumber(event.target.value))
+      }
     />
+  );
+}
+
+interface RowCountControlProps {
+  count: number;
+  onChange: (count: number) => boolean;
+}
+
+function RowCountControl({ count, onChange }: RowCountControlProps) {
+  const [draft, setDraft] = useState(String(count));
+  const draftCount =
+    draft === '' ? count : normalizeReportRowCount(Number(draft));
+
+  useEffect(() => {
+    setDraft(String(count));
+  }, [count]);
+
+  function requestCount(value: number) {
+    const requestedCount = normalizeReportRowCount(value);
+    const accepted = onChange(requestedCount);
+    setDraft(String(accepted ? requestedCount : count));
+  }
+
+  function commitDraft() {
+    requestCount(draft === '' ? count : Number(draft));
+  }
+
+  return (
+    <div className="day-count-control print-hidden" aria-label="返工天数设置">
+      <span className="day-count-label">返工天数</span>
+      <div className="day-count-stepper">
+        <button
+          className="day-count-button"
+          type="button"
+          aria-label="减少一天"
+          disabled={draftCount <= MIN_REPORT_ROW_COUNT}
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => requestCount(draftCount - 1)}
+        >
+          −
+        </button>
+        <input
+          className="day-count-input"
+          type="number"
+          min={MIN_REPORT_ROW_COUNT}
+          max={MAX_REPORT_ROW_COUNT}
+          step="1"
+          inputMode="numeric"
+          value={draft}
+          aria-label="返工天数"
+          onChange={(event) => setDraft(event.target.value)}
+          onBlur={commitDraft}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.currentTarget.blur();
+            }
+          }}
+        />
+        <button
+          className="day-count-button"
+          type="button"
+          aria-label="增加一天"
+          disabled={draftCount >= MAX_REPORT_ROW_COUNT}
+          onMouseDown={(event) => event.preventDefault()}
+          onClick={() => requestCount(draftCount + 1)}
+        >
+          +
+        </button>
+      </div>
+      <span className="day-count-unit">天</span>
+    </div>
   );
 }
 
@@ -79,12 +159,16 @@ export function ReworkTable({
   rates,
   totals,
   onRowChange,
+  onRowCountChange,
 }: ReworkTableProps) {
   return (
     <section>
       <div className="section-title-row">
         <div className="section-title">每日返工明细</div>
-        <div className="section-note">金额单位：泰铢 ฿ · 工时单位：小时</div>
+        <div className="section-title-tools">
+          <div className="section-note">金额单位：泰铢 ฿ · 工时单位：小时</div>
+          <RowCountControl count={rows.length} onChange={onRowCountChange} />
+        </div>
       </div>
 
       <div className="table-wrap">
@@ -137,7 +221,9 @@ export function ReworkTable({
                       value={row.date}
                       onCommit={(date) => onRowChange(row.id, { date })}
                     />
-                    <span className="weekday">{weekday(row.date)}</span>
+                    <span className="weekday">
+                      {row.date ? weekday(row.date) : ''}
+                    </span>
                   </td>
                   <td>
                     <NumberField

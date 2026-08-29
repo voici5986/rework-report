@@ -8,6 +8,11 @@ export function numberText(value: number): string {
   return value.toLocaleString('en-US');
 }
 
+export function normalizeNonNegativeNumber(value: string): number {
+  const parsed = Number(value || 0);
+  return Number.isFinite(parsed) ? Math.max(0, parsed) : 0;
+}
+
 export function percent(part: number, total: number): number {
   return total ? (part / total) * 100 : 0;
 }
@@ -53,9 +58,18 @@ export function weekday(value: string): string {
 }
 
 export function periodText(dates: string[]): string {
-  if (dates.length === 0) return '—';
-  const sorted = [...dates].sort();
-  const first = formatDateInput(sorted[0]);
-  const [, month, day] = sorted.at(-1)!.split('-');
-  return `${first} – ${month}/${day}`;
+  const validDates = dates.filter(
+    (date) => date !== '' && normalizeDateInput(date, '') === date,
+  );
+  if (validDates.length === 0) return '—';
+  const sorted = [...validDates].sort();
+  const firstDate = sorted[0];
+  const lastDate = sorted.at(-1)!;
+  const [firstYear] = firstDate.split('-');
+  const [lastYear, lastMonth, lastDay] = lastDate.split('-');
+  const last =
+    firstYear === lastYear
+      ? `${lastMonth}/${lastDay}`
+      : formatDateInput(lastDate);
+  return `${formatDateInput(firstDate)} – ${last}`;
 }

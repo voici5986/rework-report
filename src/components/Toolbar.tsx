@@ -9,7 +9,7 @@ export function Toolbar({ onReset, onPrint, onLogout }: ToolbarProps) {
     <div className="toolbar">
       <div className="toolbar-inner">
         <button className="btn" type="button" onClick={onReset}>
-          恢复默认数据
+          清空表单
         </button>
         <button className="btn" type="button" onClick={onLogout}>
           退出登录

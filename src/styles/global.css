@@ -305,6 +305,75 @@ h1 {
   font-size: 11px;
   color: #a3a7b0;
 }
+.section-title-tools {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.day-count-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #696e79;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.day-count-label {
+  color: #777c86;
+}
+.day-count-stepper {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: 7px;
+  background: white;
+  box-shadow: var(--shadow);
+}
+.day-count-button,
+.day-count-input {
+  height: 26px;
+  border: 0;
+  background: transparent;
+  color: #3c4049;
+  text-align: center;
+}
+.day-count-button {
+  width: 28px;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+.day-count-button:hover:not(:disabled) {
+  background: var(--panel);
+}
+.day-count-button:active:not(:disabled) {
+  transform: translateY(1px);
+  background: #eef0f4;
+}
+.day-count-button:disabled {
+  cursor: not-allowed;
+  color: #c1c4cb;
+}
+.day-count-input {
+  width: 42px;
+  padding: 0 4px;
+  border-right: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+.day-count-input:focus-visible,
+.day-count-button:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.day-count-unit {
+  color: #9196a1;
+}
 .table-wrap {
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -370,6 +439,11 @@ tbody tr:hover {
   text-align: center;
   padding: 5px 3px;
   color: #43464f;
+}
+.rate-input,
+.data-input:not(.date-input) {
+  border-color: #e4e6ee;
+  background: #fafbfc;
 }
 .date-input {
   width: 118px;
@@ -491,6 +565,15 @@ tbody tr:hover {
   }
   .kpis {
     grid-template-columns: 1fr 1fr;
+  }
+  .section-title-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .section-title-tools {
+    justify-content: space-between;
+    gap: 10px;
   }
   .table-wrap {
     overflow-x: auto;

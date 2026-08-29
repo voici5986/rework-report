@@ -26,6 +26,7 @@ export function ReportHeader({
               className="editable-text project-input"
               value={projectName}
               aria-label="项目名称"
+              placeholder="项目名称"
               onChange={(event) => onProjectNameChange(event.target.value)}
             />
           </div>
@@ -34,6 +35,7 @@ export function ReportHeader({
               className="editable-text title-input"
               value={reportTitle}
               aria-label="报表标题"
+              placeholder="返工人工成本汇总表"
               onChange={(event) => onReportTitleChange(event.target.value)}
             />
           </h1>
@@ -42,6 +44,7 @@ export function ReportHeader({
               className="editable-text subtitle-input"
               value={subtitle}
               aria-label="副标题"
+              placeholder="副标题（可选）"
               onChange={(event) => onSubtitleChange(event.target.value)}
             />
           </div>

@@ -5,6 +5,7 @@
 ## 当前功能
 
 - 页面直接编辑项目名称、标题、工资标准、日期、人数和工时
+- 返工天数可按实际周期增减，并随报表保存在本地
 - 正常工资、加班工资、监工工资自动计算
 - 汇总卡片和成本占比自动更新
 - 数据自动保存在当前浏览器 `localStorage`
@@ -53,14 +54,14 @@ openssl rand -base64 48
 只调试 React 页面：
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 如需连同 Vercel Functions 与 Routing Middleware 一起测试登录：
 
 ```bash
-npx vercel dev
+pnpm exec vercel dev
 ```
 
 本地测试前可创建 `.env.local`（已被 Git 忽略）：
@@ -73,14 +74,26 @@ REWORK_SESSION_SECRET=your-random-secret
 生产构建：
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 构建产物在 `dist/`。
 
+基础测试：
+
+```bash
+pnpm test
+```
+
+开发时监听测试：
+
+```bash
+pnpm run test:watch
+```
+
 ## 部署到 Vercel
 
-仓库连接 Vercel 后，推送 `main` 即可自动部署。Framework Preset 使用 `Vite`，构建命令 `npm run build`，输出目录 `dist`。
+仓库连接 Vercel 后，推送 `main` 即可自动部署。Framework Preset 使用 `Vite`，构建命令 `pnpm run build`，输出目录 `dist`。
 
 ## 访问保护实现
 
@@ -96,9 +109,14 @@ npm run build
 
 - `src/components/`：页面组件
 - `src/lib/calculations.ts`：所有工资和汇总计算
+- `src/lib/format.ts`：日期、金额及输入值格式化
+- `src/lib/reportRows.ts`：返工明细行的创建、校验和增减
 - `src/lib/storage.ts`：本地存储
+- `src/styles/global.css`：页面通用样式
 - `src/styles/print.css`：A4 横向打印样式
-- `src/data/defaultReport.ts`：默认报表数据
+- `src/data/defaultReport.ts`：空白初始报表模板
+- `src/types/report.ts`：报表数据类型
+- `src/test/` 与 `src/**/*.test.*`：测试工具及基础测试
 - `api/`：登录 / 退出 Vercel Functions
 - `server/`：服务端鉴权工具
 - `middleware.ts`：Vercel Routing Middleware

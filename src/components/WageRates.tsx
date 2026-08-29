@@ -1,3 +1,4 @@
+import { normalizeNonNegativeNumber } from '../lib/format';
 import type { WageRates as WageRatesType } from '../types/report';
 
 interface WageRatesProps {
@@ -30,10 +31,13 @@ export function WageRates({ rates, onChange }: WageRatesProps) {
               type="number"
               min="0"
               step="1"
-              value={rates[item.key]}
+              value={rates[item.key] || ''}
               aria-label={item.label}
               onChange={(event) =>
-                onChange(item.key, Number(event.target.value || 0))
+                onChange(
+                  item.key,
+                  normalizeNonNegativeNumber(event.target.value),
+                )
               }
             />
           </strong>
