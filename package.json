@@ -3,7 +3,10 @@
   "private": true,
   "version": "0.2.0",
   "type": "module",
-  "packageManager": "pnpm@12.4.2",
+  "engines": {
+    "node": ">=24.15.0",
+    "pnpm": ">=12 <13"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && tsc -p tsconfig.vercel.json && vite build",

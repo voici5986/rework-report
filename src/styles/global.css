@@ -410,11 +410,6 @@ thead tr.cols th {
   height: 43px;
   border-bottom: 1px solid var(--line-strong);
 }
-th:first-child,
-td:first-child {
-  text-align: left;
-  padding-left: 16px;
-}
 tbody tr {
   height: 52px;
 }
@@ -422,11 +417,25 @@ tbody td {
   border-bottom: 1px solid #eceef2;
   color: #555963;
 }
+tfoot td {
+  font-weight: 700;
+  color: #393c43;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: none;
+}
 tbody tr:last-child td {
   border-bottom: none;
 }
 tbody tr:hover {
   background: #fcfcfd;
+}
+.dash {
+  color: #b6b9c0;
+}
+tbody td:first-child,
+tfoot td:first-child {
+  text-align: left;
+  padding-left: 16px;
 }
 .date-cell {
   font-weight: 550;
@@ -482,18 +491,9 @@ tbody tr:hover {
   height: 55px;
   background: #fafafa;
 }
-.total-row td {
-  font-weight: 700;
-  color: #393c43;
-  border-top: 1px solid var(--line-strong);
-  border-bottom: none;
-}
 .total-row .grand {
   color: #5360c3;
   font-size: 16px;
-}
-.dash {
-  color: #b6b9c0;
 }
 
 .breakdown {
